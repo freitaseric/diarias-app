@@ -1,0 +1,22 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/app/generated/prisma-client"
+}
+
+model Servidor {
+  id        String @id @default(ulid())
+  nome      String
+  matricula String @unique
+  cpf       String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([matricula, cpf])
+  @@map("servidores")
+}
